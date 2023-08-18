@@ -19,7 +19,7 @@ struct lista_enlazada{
 */
 struct estructura_lista{
 	nodo cabeza;
-	int elementos;
+	int elementos;  // cardinal
 };
 
 nodo crear_nodo( int elemento ){
@@ -206,3 +206,26 @@ void mostrar( tipo_lista lista ){
 
 	printf( "]" );
 }
+
+int reemplazar (tipo_lista l, int e, int i){
+  nodo aux = crear();
+  
+  if (i < 0 || i > l->elementos){
+    return -1;
+  }
+  
+  for (int j = 0 ; j < i-1 ; j++){
+    l = l->siguiente;
+  }
+  
+  aux->valor = l->valor;
+
+  int exitoso = ins(l,e,i);
+  if ( exitoso ){
+    printf("No se pudo insertar \n");
+    return -1;
+  }
+  
+  return aux->valor;
+}
+

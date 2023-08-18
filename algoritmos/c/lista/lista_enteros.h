@@ -1,5 +1,3 @@
-
-
 // Objeto de un tipo incompleto.
 typedef struct estructura_lista* tipo_lista;
 
@@ -48,6 +46,7 @@ tipo_lista sub( tipo_lista lista, int ini, int fin );
 tipo_lista copia( tipo_lista lista );
 
 // retorna el primer elemento de una lista no vacia.
+// precondición: la lista no es vacia
 int cabeza( tipo_lista lista );
 
 // retorna todos los elementos de la lista menos el primero.
@@ -56,4 +55,4 @@ tipo_lista cola( tipo_lista lista );
 // muestra el contenido de la lista en la salida estandar 'std'
 void mostrar( tipo_lista lista );
 
-
+int reemplazar(tipo_lista lista , int elem , int pos);
