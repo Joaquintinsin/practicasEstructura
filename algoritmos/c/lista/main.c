@@ -4,6 +4,8 @@
 
 /* ejemplo para manipular listas */
 
+// Ejercicio 2 hecho, agregados Reemplazar, Intercambiar y masPositivosQueNegativos
+
 int main( int argc, char * argv[] ){
   tipo_lista lista = crear( );
 	
@@ -41,8 +43,29 @@ int main( int argc, char * argv[] ){
   mostrar( lista );
   printf("\n");
   
-  reemplazar(lista, 4, 2);
-	    
+  printf("Reemplazar 99 en la posicion 4: ");
+  int res = reemplazar(lista, 99, 4);
+  if ( res != -1 ){
+    mostrar(lista);
+    printf("\n");
+    printf("Nro reemplazado: %d \n", res);
+  }
+
+  printf("Intercambiar posicion 0 en posicion 4: ");
+  int resInt = intercambiar(lista, 0, 4);
+  if ( resInt != -1 ){
+    mostrar(lista);
+    printf("\n");
+  }else{
+    printf("Hubo un error al intercambiar \n");
+  }
+	
+  if ( masPositivosQueNegativos(lista) ){
+    printf("Hay más positivos que negativos en la lista \n");
+  }else{
+    printf("Hay más o iguales negativos que positivos en la lista, o son todos cero \n");
+  }
+
   return 0;
 }
 
