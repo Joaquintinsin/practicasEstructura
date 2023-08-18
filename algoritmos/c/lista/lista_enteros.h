@@ -1,3 +1,5 @@
+#define NMax 150
+
 // Objeto de un tipo incompleto.
 typedef struct estructura_lista* tipo_lista;
 
