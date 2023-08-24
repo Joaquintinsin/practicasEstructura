@@ -17,7 +17,6 @@ tipo_lista agregar( tipo_lista lista, int elemento );
  * -1 si la posicion es invalida. */
 int ins( tipo_lista lista, int elemento, int position);
 
-
 // agrega un elemento al final de la lista
 tipo_lista fin( tipo_lista lista, int elemento );
 

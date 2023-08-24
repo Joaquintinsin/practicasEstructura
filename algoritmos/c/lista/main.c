@@ -65,7 +65,7 @@ int main( int argc, char * argv[] ){
   }else{
     printf("Hay más o iguales negativos que positivos en la lista, o son todos cero \n");
   }
-
+  
   return 0;
 }
 

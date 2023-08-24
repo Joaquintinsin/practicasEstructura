@@ -26,7 +26,7 @@ nodo crear_nodo( int elemento ){
     nodo linkable = ( nodo ) malloc ( sizeof( struct lista_enlazada ) );
 
     linkable->valor = elemento;
-    linkable->siguiente    = NULL;
+    linkable->siguiente = NULL;
 
     return linkable;
 }
