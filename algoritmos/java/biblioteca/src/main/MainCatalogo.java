@@ -20,9 +20,47 @@ public class MainCatalogo {
 		Libro libro1 = new Libro("Isaac Asimov", "The Caves of Steel", 42);
 		Libro libro2 = new Libro("Isaac Asimov", "The Naked Sun", 47);
 		//TODO: agregue más libros
+		
 		Catalogo catalogo = new Catalogo(10);
 		//TODO: pruebe los métodos agregarLibro y buscarPorTitulo
 		System.out.println("Catalogo:\n" + catalogo);
+		
+		if (catalogo.agregarLibro(libro1))
+			System.out.println("Agregado con exito \n");
+		else
+			System.out.println("No se pudo agregar \n");
+		
+		System.out.println("Catalogo:\n" + catalogo);
+		
+		if (catalogo.agregarLibro(libro2))
+			System.out.println("Agregado con exito \n");
+		else
+			System.out.println("No se pudo agregar \n");
+		
+		System.out.println("Catalogo:\n" + catalogo);
+		
+		Libro lookingForLibro = catalogo.buscarPorTitulo("Diccionario");
+		if (lookingForLibro == null)
+			System.out.println("No se encontró el libro \n");
+		else
+			System.out.println(lookingForLibro);
+		
+		Libro libro4 = new Libro("Joaquin", "Diccionario", 126);
+		if (catalogo.agregarLibro(libro4))
+			System.out.println("Agregado con exito \n");
+		else
+			System.out.println("No se pudo agregar \n");
+		
+		lookingForLibro = catalogo.buscarPorTitulo("Diccionario");
+		
+		if (lookingForLibro == null)
+			System.out.println("No se encontró el libro \n");
+		else
+			System.out.println(lookingForLibro);
+		
+		boolean varLogica = (libro4 == lookingForLibro);
+		System.out.println(varLogica);
+		
 	} 
 
 }

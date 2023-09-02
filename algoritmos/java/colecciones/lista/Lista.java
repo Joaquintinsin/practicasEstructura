@@ -22,7 +22,7 @@ package colecciones.lista;
 * @param T : el tipo de los elementos a almacenar en la Lista.
 * @version 1.1
 */
-public interface Lista<T> {
+public interface Lista <T> {
 
 	/**
 	* Agrega un elemento al final de la lista.

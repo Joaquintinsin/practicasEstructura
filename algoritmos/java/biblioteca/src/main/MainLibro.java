@@ -24,6 +24,12 @@ public class MainLibro {
 		System.out.println(libro1 + " y " + libro3 + "\nSon iguales usando equals? " + (libro1.equals(libro3)));
 		System.out.println(libro1 + " y " + libro3 + "\nSon iguales usando ==? " + (libro1 == libro3));
 		//TODO: realice más pruebas
-	} 
+		
+		Libro libro4 = new Libro("Joaquin", "Test1", 1);
+		System.out.println("El libro de " + libro4.autor() + " se llama " + libro4.titulo() + " y tiene " + libro4.nroPaginas() + " paginas.");
+		
+		boolean varLogica = (libro4.equals(libro4));
+		System.out.println("Res varLogica: " + varLogica);
+	}
 
 }

@@ -34,6 +34,7 @@ public class Catalogo {
 	*/
 	public Catalogo() {
 		this(CAPACIDAD_POR_DEFECTO);
+		// forwarder constructor? llama a un constructor definido con ese parametro
 	}
 	
 	/**
@@ -51,7 +52,8 @@ public class Catalogo {
 	* @return {@code true} sii no hay capacidad disponible.
 	*/
 	public boolean estaLleno() {
-		throw new UnsupportedOperationException("Debe implementar este método");
+		// throw new UnsupportedOperationException("Debe implementar este método");
+		return nroLibros == libros.length;
 	}
 	
 	/**
@@ -61,7 +63,15 @@ public class Catalogo {
 	* @see #estaLleno()
 	*/
 	public boolean agregarLibro(Libro libro) {
-		throw new UnsupportedOperationException("Debe implementar este método (el Libro debe ser agregado al final)");
+		// throw new UnsupportedOperationException("Debe implementar este método (el Libro debe ser agregado al final)");
+		if (libro == null)
+			return false;
+		if (estaLleno())
+			return false;
+		
+		libros[nroLibros] = libro;
+		nroLibros++;
+		return true;
 	}
 	
 	/**
@@ -70,13 +80,34 @@ public class Catalogo {
 	* @return un libro {@code l} que pertenece a este {@code Catalogo} sii {@code l.titulo().equals(titulo)}, {@code null} en caso contrario.
 	*/
 	public Libro buscarPorTitulo(String titulo) {
-		throw new UnsupportedOperationException("Debe implementar este método");
+		// throw new UnsupportedOperationException("Debe implementar este método");
+		if (nroLibros == 0)
+			return null;
+		
+		// devuelve el que aparezca primero
+		for (int i = 0 ; i < nroLibros ; i++){
+			if (libros[i].titulo() == titulo)
+				return libros[i];
+		}
+		
+		// no encontró títulos iguales, devuelve null
+		return null;
 	}
 	
 	@Override
 	public String toString() {
-		throw new UnsupportedOperationException("Debe implementar este método (debe usar el método toString() de Libro)");
+		// throw new UnsupportedOperationException("Debe implementar este método (debe usar el método toString() de Libro)");
+		String mensaje = "This is a Catalogo. You can save Libros in here and they'll be saved in an array.\n";
+		if (nroLibros == 0){
+			mensaje += "There's no Libros stored here, so the Catalogo is empty. \n";
+			return mensaje;
+		}else{
+			mensaje += "Let me display the Libros stored here: \n";
+			for (int i = 0 ; i < nroLibros ; i++){
+				mensaje += "\nLibro number " + (i+1) + "\n";
+				mensaje += libros[i].toString();
+			}
+			return mensaje;
+		}
 	}
-	
-
 }
