@@ -64,7 +64,7 @@ public class Catalogo {
 	*/
 	public boolean agregarLibro(Libro libro) {
 		// throw new UnsupportedOperationException("Debe implementar este método (el Libro debe ser agregado al final)");
-		if (libro == null)
+		if (libro == null || !(libro instanceof Libro) )
 			return false;
 		if (estaLleno())
 			return false;

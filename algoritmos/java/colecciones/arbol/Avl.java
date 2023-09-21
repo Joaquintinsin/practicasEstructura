@@ -1,11 +1,8 @@
-package colecciones.arbol;
+package arbol;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.LinkedList;
-
-
-
 
 /**
  * Una implementación de {@code Diccionario} mediante nodos encadenados que preserva,

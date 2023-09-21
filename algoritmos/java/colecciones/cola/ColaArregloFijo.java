@@ -50,32 +50,56 @@ public class ColaArregloFijo<T> implements Cola<T> {
 
 	@Override
 	public boolean esVacia() {
-		throw new UnsupportedOperationException("Implementar y eliminar esta sentencia");	
+		return (elementos == 0);	
 	}
 
 	@Override
 	public int elementos() {
-		throw new UnsupportedOperationException("Implementar y eliminar esta sentencia");
+		return elementos;
 	}
 
 	@Override
 	public boolean encolar(T elem) {
-		throw new UnsupportedOperationException("Implementar y eliminar esta sentencia");		
+		if ( elem == null || elementos == arreglo.length )
+            return false;
+        
+        if ( elementos == 0 ){
+            arreglo[0] = elem;
+            elementos++;
+            return true;
+        }
+        
+        int i = elementos - 1;
+        do {
+            arreglo[i + 1] = arreglo[i];
+            i--;
+        } while (i >= 0);
+        
+        arreglo[0] = elem;
+        elementos++;
+        return true;
 	}
 
 	@Override
 	public T desencolar() {
-		throw new UnsupportedOperationException("Implementar y eliminar esta sentencia");
+		if ( elementos == 0 ) 
+            throw new IllegalStateException("No se puede desencolar, la cola está vacía");
+        
+        elementos--;
+        return elemento(elementos);
 	}
 
 	@Override
 	public T primero() {
-		throw new UnsupportedOperationException("Implementar y eliminar esta sentencia");	
+		if ( elementos == 0 ) 
+            throw new IllegalStateException("La cola está vacía");
+        
+        return elemento(0);
 	}
 
 	@Override
 	public void vaciar() {
-		throw new UnsupportedOperationException("Implementar y eliminar esta sentencia");	
+		elementos = 0;
 	}
 
 	@Override
@@ -85,12 +109,39 @@ public class ColaArregloFijo<T> implements Cola<T> {
 
 	@Override
 	public String toString() {
-		throw new UnsupportedOperationException("Implementar y eliminar esta sentencia");	
+		String msg = "Elementos de la cola implementada con arreglos: \n";
+        if ( elementos == 0 ){
+            msg += "La cola está vacía! \n";
+            return msg;
+        }
+        
+        msg += "Hay " + elementos + " elementos almacenados en la cola. \n";
+        for ( int i = 0 ; i < elementos ; i++ ){
+            msg += "Elemento número " + (i+1) + ": \n";
+            msg += elemento(i).toString();
+            msg += "\n";
+        }
+        return msg;	
 	}
 
 	@Override
 	public boolean equals(Object other) {
-		throw new UnsupportedOperationException("Implementar y eliminar esta sentencia");	
+		if ( other == null || !(other instanceof ColaArregloFijo) )
+            return false;
+            
+        ColaArregloFijo otraCola = new ColaArregloFijo();
+        otraCola = (ColaArregloFijo) other;
+        if ( otraCola.elementos() != elementos )
+            return false;
+        
+        if ( otraCola == this )
+            return true;
+        
+        for ( int i = elementos-1 ; i < 0 ; i++ ){
+            if ( elemento(i) != otraCola.elemento(i) )
+                return false;
+        }
+        return true;
 	}
 
 	/**
@@ -99,7 +150,7 @@ public class ColaArregloFijo<T> implements Cola<T> {
 	*/
 	@SuppressWarnings("unchecked")
    	private T elemento(int index) {
-        	return (T) arreglo[index];
-    	}
+        return (T) arreglo[index];
+    }
 
 }

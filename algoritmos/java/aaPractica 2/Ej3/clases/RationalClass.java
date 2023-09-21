@@ -6,7 +6,7 @@ package clases;
  */
 
 public class RationalClass {
-    // Atributes, where b is used for denominator, b != 0
+    // Fields, where b is used for denominator, b != 0
     private long a;
     private long b;
     
@@ -21,6 +21,8 @@ public class RationalClass {
     
     /**
      * Constructor with parameters.
+     * @param number1 initialize the first field
+     * @param number2 initialize the second field
      * @throws an exception when second parameter is less or equal than 0.
      */
     public RationalClass(long number1, long number2) {
@@ -39,6 +41,7 @@ public class RationalClass {
     
     /**
      * Setter from the first attribute.
+     * @param number sets the first field
      */
     public void setA(long number) {
         a = number;
@@ -54,6 +57,7 @@ public class RationalClass {
     
     /**
      * Setter from second attribute.
+     * @param number sets the second field
      * @throws an exception when try to set a non-positive number
      */
     public void setB(long number) {
@@ -63,6 +67,8 @@ public class RationalClass {
     
     /**
      * The addition on rational numbers
+     * @param rationalNumber the other rational number to plus
+     * @throws IllegalArgumentException when rationalNumber is not an object of RationalClass
      * @return an abstract type RationalClass that contains both attributes aditionated each others.
      */
     public RationalClass suma(RationalClass rationalNumber) {
@@ -74,8 +80,8 @@ public class RationalClass {
             long nuevoNominador = (rationalNumber.getA() * b) + (rationalNumber.getB() * a);
             long nuevoDenominador = rationalNumber.getB() * b;
             RationalClass racionalResultado = new RationalClass(nuevoNominador, nuevoDenominador);
-            racionalResultado.setA(nuevoNominador);
-            racionalResultado.setB(nuevoDenominador);
+        //    racionalResultado.setA(nuevoNominador);
+        //    racionalResultado.setB(nuevoDenominador);
             return racionalResultado;
         }
         RationalClass racionalResultado = new RationalClass(rationalNumber.getA() + a, b);
@@ -84,8 +90,9 @@ public class RationalClass {
     
     /**
      * The substraction on rational numbers
+     * @param rationalNumber the other rational number to minus
      * @return an abstract type RationalClass that contains both attributes substracted each others.
-     *        it can be null if @param is not a RationalClass abstract type
+     *        it can be null if @param rationalNumber is not a RationalClass abstract type
      */
     public RationalClass resta(RationalClass rationalNumber) {
         if (!(rationalNumber instanceof RationalClass))
@@ -105,7 +112,8 @@ public class RationalClass {
     
     /**
      * The method equals, override from Java Object
-     * @return = true when @param is the same class that the method calls or attributes are both the same
+     * @param rationalNumber the other rational number to compare
+     * @return = true when @param rationalNumber is the same class that the method calls or attributes are both the same
      *      otherwise @return = false
      */
     @Override
@@ -118,7 +126,7 @@ public class RationalClass {
 			return false;
 		
         RationalClass secondRationalNumber = (RationalClass) rationalNumber;
-		return (secondRationalNumber.getA() == a && secondRationalNumber.getB() == b);
+		return (secondRationalNumber.getA() * b == secondRationalNumber.getB() * a);
 	}
     
     /**

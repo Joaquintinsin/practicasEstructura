@@ -1,4 +1,4 @@
-package colecciones.arbol;
+package arbol;
 
 import java.util.List;
 
@@ -139,10 +139,10 @@ public interface Diccionario<T> {
     * <li>Para cada nodo en el árbol existe un solo camino para alcanzarlo desde la raíz.</li>
     * <li>La cantidad de nodos en el árbol debe ser igual al resultado del método {@code elementos()}.</li>
     * <li> Los nodos del arbol se organizan en un orden total y deben cumplir que:
-    *     <ul>
+    *    <ul>
     *        <li> El subarbol izquierdo de un nodo contiene solo nodos con valores menores que el valor del nodo. </li>
     *        <li> El subarbol derecho de un nodo contiene solo nodos con valores mayores que el valor del nodo.</li>
-    *        <li> Los subarboles izquierdo y derecho también deben ser un diccionario.</>
+    *        <li> Los subarboles izquierdo y derecho también deben ser un diccionario.</li>
     *    </ul>
     * </li>
     * </ul>

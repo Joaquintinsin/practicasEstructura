@@ -1,4 +1,4 @@
-package colecciones.lista;
+package colecciones.listaNodos;
 
 /**
 * La interface {@code Lista} representa una secuencia de objetos. El usuario de esta interface tiene control de acceso, inserción, y eliminación indexada de elementos.
@@ -22,7 +22,7 @@ package colecciones.lista;
 * @param T : el tipo de los elementos a almacenar en la Lista.
 * @version 1.1
 */
-public interface Lista <T> {
+public interface Lista<T> {
 
 	/**
 	* Agrega un elemento al final de la lista.
@@ -43,7 +43,7 @@ public interface Lista <T> {
 	* @param elem el elemento a agregar
 	* @param indice el indice donde se agrega el elemento
 	* @return {@code true} sii el elemento pudo ser agregado
-	* @throws IndexOutOfBoundsException si {@code indice} &lt; {@code 0}
+	* @throws IndexOutOfBoundsException si ({@code indice} &lt; {@code 0} || {@code indice} &gt; {@code #elementos()})
 	*/
 	public boolean insertar(T elem, int indice);
 
@@ -67,7 +67,7 @@ public interface Lista <T> {
 	
 	/**
 	* Retorna la porción de esta lista entre los índice especificados {@code desdeInd}, inclusivo, y {@code hastaInd}, exclusivo, en una nueva lista.
-	* Si {@code fromInd} es igual a {@code hastaInd} se retorna un a lista vacía.
+	* Si {@code fromInd} es igual a {@code hastaInd} se retorna una lista vacía.
 	* @param desdeInd el índice inferior, inclusivo
 	* @param hastaInd el índice superior, exclusivo
 	* @return una nueva lista formada con los elementos entre {@code desdeInd} hasta {@code hastaInd - 1} de esta lista

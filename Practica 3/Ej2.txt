@@ -1,0 +1,194 @@
+2. Dada el álgebra de los booleanos: (Bool, true, false, ¬, ∨, ->)
+    a) Diseñe una implementación con números naturales, utilizando los números pares para representar
+    un valor booleano y los números impares para representar el otro valor. Implemente este TAD en Java.
+    
+    b) Defina la función de abstracción, clasifique las operaciones y demuestre que su implementación
+    es correcta.
+
+a) (NatParImpar , -true- , -false- , -¬- , -v- , -->-)
+
+-true- :: NatParImpar
+-true- = 2
+
+-false- :: NatParImpar
+-false- = 1
+
+-¬- :: NatParImpar -> NatParImpar
+-¬- n = n+1
+
+-v- :: NatParImpar -> NatParImpar -> NatParImpar
+-v- n m = n*m
+
+-->- :: NatParImpar -> NatParImpar -> NatParImpar
+-->- n m = if (n mod 2 != 0) or (m mod 2 = 0)  then 2
+           [] (n mod 2 = 0) and (m mod 2 != 0) then 1
+
+
+b) Función de abstracción:
+[||] :: NatParImpar -> Bool
+[||] n = (n mod 2 = 0)
+
+
+Demostración 1:
+    [|-true-|] ?=? true
+= {def -true-}
+    [|2|] ?=? true
+= {def [||]}
+    (2 mod 2 = 0) ?=? true
+= {def mod}
+    (0 = 0) ?=? true
+= {def !=}
+    true ?=? true
+= {def =}
+    true
+
+Demostración 2:
+    [|-false-|] ?=? false
+= {def -false-}
+    [|1|] ?=? false
+= {def [||]}
+    (1 mod 2 = 0) ?=? false
+= {def mod}
+    (1 = 0) ?=? false
+= {def !=}
+    false ?=? false
+= {def =}
+    true
+
+Demostración 3:
+    [|-¬n-|] ?=? ¬[|n|]
+{def -¬-}
+    [|n+1|] ?=? ¬[|n|]
+{def [||]}
+    (n+1 mod 2 = 0) ?=? ¬[|n|]
+
+* Caso a) n es par : n mod 2 = 0
+    (n+1 mod 2 = 0) ?=? ¬[|n|]
+{def mod}
+    false ?=? ¬[|n|]
+{logica}
+    ¬true ?=? ¬[|n|]
+{def [||] (n mod 2 = 0)}
+    ¬[|n|] ?=? ¬[|n|]
+{def =}
+    true
+    
+* Caso b) n es impar : n mod 2 != 0
+    (n+1 mod 2 = 0) ?=? ¬[|n|]
+{def mod}
+    true ?=? ¬[|n|]
+{logica}
+    ¬false ?=? ¬[|n|]
+{def [||] (n mod 2 = 0)}
+    ¬[|n|] ?=? ¬[|n|]
+{def =}
+    true
+
+Demostración 4:
+    [|n -v- m|] ?=? [|n|] v [|m|]
+= {def -v-}
+    [|n*m|] ?=? [|n|] v [|m|]
+= {def [||]}
+    ((n*m) mod 2 = 0) ?=? (n mod 2 = 0) v (m mod 2 = 0)
+
+* Caso 1: n par y m par
+    ((n*m) mod 2 = 0) ?=? (n mod 2 = 0) v (m mod 2 = 0)
+= {Hipotesis caso 1: def mod}
+!: n=2k , m=2j : (2k)(2j) = 2(k2j) = 2l , forall j,k,l
+    (0 = 0) ?=? (0 = 0) v (0 = 0)
+= {def =}
+    true ?=? true v true
+= {def v}
+    true ?=? true
+= {def =}
+    true
+
+* Caso 2: n par y m impar
+    ((n*m) mod 2 = 0) ?=? (n mod 2 = 0) v (m mod 2 = 0)
+= {Hipotesis caso 2: def mod} 
+!!: n=2k , m=2j : 2k*(2j+1) = 2l , forall k,j,l=k*(2j+1)
+    (0 = 0) ?=? (0 = 0) v (1 = 0)
+= {prop mod, def =}
+    true ?=? true v false
+= {def v}
+    true ?=? true
+= {def =}
+    true
+
+* Caso 3: n impar y m par
+=   {Análogo a Caso 2, donde !! aclara la demostración, siendo n*m un numero par}
+    true
+
+* Caso 4: n impar y m impar
+    ((n*m) mod 2 = 0) ?=? (n mod 2 = 0) v (m mod 2 = 0)
+= {Hipotesis caso 4: def mod}
+!!!!: n=2k+1 , m=2j+1 : (2k+1)*(2j+1) = (2k2j)+2k+2j+1 = 2((k2j)+k+j)+1 = 2l+1 , forall k,j,l=(k2j)+k+j
+    (1 = 0) ?=? (1 = 0) v (1 = 0)
+= {def !=}
+    false ?=? false v false
+= {def v}
+    false ?=? false
+= {def =}
+    true
+
+
+Demostración 5:
+    [|n-->-m|] ?=? [|n|] -> [|m|]
+= {def -->-}
+
+* Caso 1: n par y m par
+!: Caso (n mod 2 != 0) or (m mod 2 = 0), porque uno de los disyuntos es verdadero (m par)
+    [|2|] ?=? [|n|] -> [|m|]
+= {def [||]}
+    (2 mod 2 = 0) ?=? (n mod 2 = 0) -> (m mod 2 = 0)
+= {def mod}
+    (0 = 0) ?=? (0 = 0) -> (0 = 0)
+= {def =}
+    true ?=? true -> true
+= {def ->}
+    true ?=? true
+= {def =}
+    true
+
+* Caso 2: n par y m impar
+!!: Caso (n mod 2 = 0) and (m mod 2 != 0)
+    [|1|] ?=? [|n|] -> [|m|]
+= {def [||]}
+    (1 mod 2 = 0) ?=? (n mod 2 = 0) -> (m mod 2 = 0)
+= {def mod}
+    (1 = 0) ?=? (0 = 0) -> (1 = 0)
+= {def =}
+    false ?=? true -> false
+= {def ->}
+    false ?=? false
+= {def =}
+    true
+
+* Caso 3: n impar y m par
+!!!: Caso (n mod 2 != 0) or (m mod 2 = 0) , (Análogo a Caso 1)
+    [|2|] ?=? [|n|] -> [|m|]
+= {def [||]}
+    (2 mod 2 = 0) ?=? (n mod 2 = 0) -> (m mod 2 = 0)
+= {def mod}
+    (0 = 0) ?=? (1 = 0) -> (0 = 0)
+= {def =}
+    true ?=? false -> true
+= {def ->}
+    true ?=? true
+= {def =}
+    true
+
+* Caso 4: n impar y m impar
+!!!!: Caso (n mod 2 != 0) or (m mod 2 = 0), (Análogo a Caso 1 y 3)
+    [|2|] ?=? [|n|] -> [|m|]
+= {def [||]}
+    (2 mod 2 = 0) ?=? (n mod 2 = 0) -> (m mod 2 = 0)
+= {def mod}
+    (0 = 0) ?=? (1 = 0) -> (1 = 0)
+= {def =}
+    true ?=? false -> false
+= {def ->}
+    true ?=? true
+= {def =}
+    true
+

@@ -1,4 +1,4 @@
-package colecciones.arbol;
+package arbol;
 
 /**
  * Clase auxiliar para diccionarios implementados con nodos encadenados.

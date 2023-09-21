@@ -1,4 +1,4 @@
-package colecciones.arbol;
+package arbol;
 
 import java.util.Comparator;
 import java.util.List;

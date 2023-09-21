@@ -1,0 +1,10 @@
+compilar:
+	pararse en */Ej5
+	javac cola/b/Palindromo.java
+	javac cola/MainColas.java
+
+ejecutar:
+	pararse en */Ej5/cola/b
+	java Palindromo
+    o pararse en */Ej5
+	java cola.MainColas

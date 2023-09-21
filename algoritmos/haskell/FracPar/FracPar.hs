@@ -25,5 +25,3 @@ instance Num FracPar where  -- | Implementamos la clase Num, ya que los Frac son
 instance Fractional FracPar where -- | implementamos la division
     (p :/ q) / (n :/ m) = (p*m) :/ (q*n)  
     fromRational r =  (numerator r) :/ (denominator r)
-   
-
