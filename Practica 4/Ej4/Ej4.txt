@@ -1,0 +1,34 @@
+4. Considere el siguiente programa:
+
+public boolean cuantoTardo (int key, int[] data, int size) {
+    int index = 0;
+    while (index < size) {
+        if (data[index] == key)
+            return true;
+        index++;
+    }
+    return false;
+}
+
+· Describa qué hace la función cuantoTardo.
+· Calcule el tiempo de ejecución (t(n)) de la función cuantoTardo, en el peor caso, y la tasa de crecimiento O(t(n)).
+
+Equivalentemente :
+    public boolean cuantoTardo (int key, int[] data, int size) {
+        for (int index = 0 ; index < size ; index++)
+            if (data[index] == key)
+                return true;
+        return false;
+    }
+
+La función cuantoTardo busca, en un arreglo de enteros, un valor entero pasado como parámetro, hasta un tamaño
+Dado un arreglo de enteros, un entero a buscar y el limite de búsqueda del arreglo, 
+devuelve true si encuentra el valor deseado o false si no lo encuentra
+
+El tiempo de ejecución T(n) en el peor caso es
+T(size) = Sumatoria desde index=0 hasta size-1 de c
+        = size-1*c
+El tiempo de ejecución es lineal
+La tasa de crecimiento de O(t(n)) es O(n), siendo n una lineal
+
+    El tiempo de ejecución es T(n) y la tasa de crecimiento es a qué está acotada esa función: a qué pertenece

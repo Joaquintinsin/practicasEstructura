@@ -1,57 +1,70 @@
-{-
 4. Dada el álgebra de conjuntos: ({A}, ∅, ins, ∪, ∈), se pide dar una implementación concreta con listas
 ordenadas y sin repetidos. Dé el invariante de representación y demuestre la corrección de sus operaciones.
 Implemente este TAD utilizando el lenguaje de programación Haskell.
--}
 
-abstracto llaves concreto corchetes
-(-[A]-, -empty-, -ins-, -u-, -e-)
+abstracto : llaves (osea conjuntos, quiero implementar los conjuntos)
+concreto : corchetes (osea las listas, que son las que implemento yo para llegar a los conjuntos)
+([A], -empty-, -ins-, -u-, -e-)
 
-[||] :: -[A]- -> {A}
+[||] :: [A] -> {A}
 [||] [] = {}
 [||] (x:xs) = {x} u [|xs|]
 
 Suryectividad: usando cardinalidad de conjuntos
-forall s e {A} : Exs e [A] : [|xs|] = s
+Forall s e {A} : Exists xs e [A] : [|xs|] = s
+
 Caso Base: #s = 0
-Existe xs e [A] : [|xs|] = {}
-= existe la lista vacía:
-# [|[]|] = 0
+Es decir, s = {}
+¿Exists xs e [A] : [|xs|] = {}?
+= existe la lista vacía
+#[| [] |]
+= def [||]
+#{}
+= def #
+0
 
 Caso Inductivo: #s = n+1
-H.Inductiva: forall s e {A} : Exs e [A] : [|xs|] = s
-Probar: forall s' e {A} : Eys e [A] : [|ys|] = s'
+// H.Inductiva: Forall s e {A} : Exists xs e [A] : [|xs|] = s \\
+Probar: Forall s' e {A} : Exists ys e [A] : [|ys|] = s'
+es decir,
+    Forall #s' = #s+1 , ¿Exists (x:xs) e [A] : [|(x:xs)|] = s'?
+luego,
+    Exists (x:xs) e [A] : [|x:xs|] = {x} u [|xs|] (def [||])
+#({x} u [|xs|]) 
+= {Prop #}
+#{x} + #[|xs|]
+= {Def # e H.I. : #[|xs|] = s , donde x es un elemento no repetido porque xs cumple el invariante, entonces suma 1 siempre}
+1+#s
+= {Conmutatividad +}
+#s+1
 
-Existe (x:xs) e [A] : [|x:xs|] = {x} u [|xs|]
-#({x} u [|xs|]) = #s+1 porque #s es h.i. y +1 es porque #{x}=1, es un elemento no repetido por enunciado, entonces suma 1 siempre
 
-
--empty- :: -[A]-
+-empty- :: [A]
 -empty- = []
 
--ins- :: a -> -[A]- -> [A]
--ins- a -[]- = -[a]-
--ins- a -(x:xs)- = | a < x = a:-(x:xs)-
-                   | a > x = x:(-ins- a -xs-)
-                   | otherwise = -(x:xs)-
+-ins- :: a -> [A] -> [A]
+-ins- a [] = [a]
+-ins- a (x:xs) = | a < x = a:(x:xs)
+                   | a > x = x:(-ins- a xs)
+                   | otherwise = (x:xs)
 
--u- :: -[A]- -> -[A]- -> -[A]-
--u- -[]- -[]- = -[]-
--u- -xs- -[]- = -xs-
--u- -[]- -ys- = -ys-
--u- -(x:xs)- -(y:ys)- = | x < y = x : -u- -xs- -(y:ys)-
-                        | x > y = y : -u- -(x:xs)- -ys-
-                        | otherwise = -u- -xs- -ys-
+-u- :: [A] -> [A] -> [A]
+-u- [] [] = []
+-u- xs [] = xs
+-u- [] ys = ys
+-u- (x:xs) (y:ys) = | x < y = x : -u- xs (y:ys)
+                    | x > y = y : -u- (x:xs) ys
+                    | otherwise = -u- xs ys
 
--e- :: a -> -[A]- -> Bool
--e- n -[]- = False
--e- n -(x:xs)- = | n == x = True
-                 | otherwise = -e- n -xs-
+-e- :: a -> [A] -> Bool
+-e- n [] = False
+-e- n (x:xs) = | n == x = True
+               | otherwise = -e- n xs
 
-inv :: -[A]- -> Bool
-inv -[]- = True
-inv -[x]- = True
-inv -(x:y:xs)- = x < y && inv -(y:xs)-
+inv :: [A] -> Bool
+inv [] = True
+inv [x] = True
+inv (x:y:xs) = x < y && inv (y:xs)
 
 
 para probar invariante:
@@ -93,7 +106,8 @@ inv (x:xs)
 True
 
 
-INVARIANTE DE UNION:
+INVARIANTE DE UNION: 
+    (Incompleto)
 inv xs ^ inv ys -> inv -u- xs ys
 
 Caso Base 1: inv [] ^ inv ys -> inv -u- [] ys
@@ -147,17 +161,15 @@ Caso 2.2: xs = [a]
 inv x: -u- [a] (y:ys)
 
 
-
-
-= x : -u- -xs- -(y:ys)-
-| x > y = y : -u- -(x:xs)- -ys-
-| otherwise = -u- -xs- -ys-
-
+= x : -u- xs (y:ys)
+| x > y = y : -u- (x:xs) ys
+| otherwise = -u- xs ys
 
 
 
 
 
+Notas al margen
 
 
 el algebra abstracta es la que yo le voy a dar la implementacion del algebra concreta

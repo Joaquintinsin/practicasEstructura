@@ -1,0 +1,17 @@
+f(n) e O(g(n)) ==> Existe n0,c0 > 0 , Paratodo n>=n0 : f(n) <= c0*g(n) ==> lim n->+inf (f(n)/g(n)) = C
+
+3. Probar que se cumple log¿k n ∈ O(log¿t n), donde k y t son números positivos.
+
+    log¿k n e O(log¿t n) , forall k,t > 0 
+= [def O]
+    Existe c1,n1 > 0 , Paratodo n >= n1 : log¿k n <= c1*log¿t n
+= [def O]
+    lim n->+inf (log¿k n/log¿t n)
+= [Cambio de base]
+    lim n->+inf ((log¿t n/log¿t k) * (1/log¿t n))
+= [Existencia del inverso]
+    lim n->+inf (1/log¿t k)
+= [Prop lim]
+    (1/log¿t k)
+= [Prop función cociente]
+    C
