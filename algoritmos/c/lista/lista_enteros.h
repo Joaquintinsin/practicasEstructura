@@ -56,12 +56,15 @@ tipo_lista cola( tipo_lista lista );
 // muestra el contenido de la lista en la salida estandar 'std'
 void mostrar( tipo_lista lista );
 
+// Ejercicio 2, a)
 // reemplaza un elemento de la lista en una posicion dada y devuelve el que estaba originalmente en esa posición
 int reemplazar(tipo_lista lista , int elem , int pos);
 
+// Ejercicio 2, a)
 // intercambia dos elementos de la lista para dos posiciones dadas
 // devuelve -1 si no se pudo hacer, o devuelve 0 si fue realizado el intercambio
 int intercambiar (tipo_lista lista, int pos1, int pos2);
 
+// Ejercicio 2, c)
 // devuelve 1 si hay mas positivos que negativos, en otro caso devuelve 0
 int masPositivosQueNegativos(tipo_lista l);

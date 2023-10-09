@@ -27,10 +27,8 @@ int es_vacia( tipo_lista arr ){
 }
 
 tipo_lista agregar( tipo_lista arr, int elem ){
-    if ( arr->elementos == NMax ){
-        // El arreglo está lleno, devuelve el mismo arreglo.
+    if ( arr->elementos == NMax )   // El arreglo está lleno, devuelve el mismo arreglo.
         return arr;
-    }
     
     // Falta correr los elementos (Ver si hace falta)
 
@@ -41,11 +39,12 @@ tipo_lista agregar( tipo_lista arr, int elem ){
 }
 
 int ins( tipo_lista arr, int elem, int position){
-    if ( position < 0 || position > arr->elementos ){
+    if ( position < 0 || position > arr->elementos )
         return -1;
-    };
-
-    // Falta correr los elementos
+    
+    for (int i = position ; i < arr->elementos ; i++)
+        arr->arreglo[i+1] = arr->arreglo[i];
+    
     arr->arreglo[position] = elem;
 
     return 0;
@@ -58,37 +57,32 @@ tipo_lista fin( tipo_lista arr, int elem ){
 }
 
 int eliminar_comienzo( tipo_lista arr ){
-    if ( es_vacia( arr ) ){
+    if ( es_vacia( arr ) )
         return -1;
-    }
 
-    for (int i = 0 ; i < arr->elementos ; i++){
+    for (int i = 0 ; i < arr->elementos ; i++)
         arr->arreglo[i] = arr->arreglo[i+1];
-    }
     arr->elementos = (arr->elementos) - 1;
 
     return 0;
 }
 
 int eliminar( tipo_lista arr, int posicion){
-    if ( posicion < 0 || posicion > arr->elementos ){
+    if ( posicion < 0 || posicion > arr->elementos )
         return -1;
-    };
 
-    if ( es_vacia( arr ) ){
+    if ( es_vacia( arr ) )
         return -1;
-    }
 
     if ( !posicion ){
         eliminar_comienzo( arr );
-
         return 0;
     }
-
-    for (int i = 0 ; i < posicion ; i++){
-    }
-
+    
     int i = 0;
+    while (i < posicion)
+        i++;
+    
     while ( i < arr->elementos ){
         arr->arreglo[i] = arr->arreglo[i+1];
         i++;
@@ -100,9 +94,8 @@ int eliminar( tipo_lista arr, int posicion){
 }
 
 int obtener( tipo_lista arr, int posicion ){
-    if (posicion < 0 || posicion > arr->elementos){
+    if (posicion < 0 || posicion > arr->elementos)
         return -1;
-    }
 
     return arr->arreglo[posicion];
 }
@@ -110,9 +103,8 @@ int obtener( tipo_lista arr, int posicion ){
 tipo_lista reversa( tipo_lista arr ){
     tipo_lista resultado = crear();
 
-    for ( int i = 0 ; i < arr->elementos ; i++ ){
+    for ( int i = 0 ; i < arr->elementos ; i++ )
         agregar( resultado, obtener( arr, i ));
-    }
 
     return resultado;
 }
@@ -120,13 +112,11 @@ tipo_lista reversa( tipo_lista arr ){
 tipo_lista concat( tipo_lista ini, tipo_lista cola ){
     tipo_lista resultado = crear();
 
-    for ( int i = 0; i < ini->elementos ; i++ ){
+    for ( int i = 0; i < ini->elementos ; i++ )
         fin( resultado, obtener( ini, i ));
-    };
 
-    for ( int i = 0; i < cola->elementos ; i++ ){
+    for ( int i = 0; i < cola->elementos ; i++ )
         fin( resultado, obtener( cola, i ));
-    };
 
     return resultado;
 }
@@ -134,11 +124,10 @@ tipo_lista concat( tipo_lista ini, tipo_lista cola ){
 tipo_lista sub( tipo_lista arr, int c, int f ){
     tipo_lista resultado = crear();
 
-    for ( int i = c; i < f ; i++ ){
+    for ( int i = c; i < f ; i++ )
         fin( resultado, obtener( arr, i ));
-    }
 
-    return arr;
+    return resultado;
 }
 
 tipo_lista copia( tipo_lista arr ){
@@ -156,13 +145,13 @@ tipo_lista cola( tipo_lista arr ){
 void mostrar( tipo_lista arr ){
     printf( "[ " );
 
-    for ( int i = 0; i < arr->elementos; i++ ){
-        printf( "%i ", obtener( arr, i ) );
-    }
+    for ( int i = 0; i < arr->elementos; i++ )
+        printf( "%i ", arr->arreglo[i] );
 
     printf( "]" );
 }
 
+// Ejercicio 2, a)
 int reemplazar (tipo_lista arr, int e, int i){
     tipo_lista aux = crear();
 
@@ -182,9 +171,10 @@ int reemplazar (tipo_lista arr, int e, int i){
 
     return obtener(arr, i);
 }
-/*
+
+// Ejercicio 2, a)
 int intercambiar (tipo_lista l, int p1, int p2){
-    nodo aux = crear();
+    int aux;
 
     if (p1 < 0 || p1 > l->elementos-1){
         printf("Posición 1 inexistente \n");
@@ -195,29 +185,27 @@ int intercambiar (tipo_lista l, int p1, int p2){
         return -1;
     }
 
-    aux->valor = reemplazar(l,obtener(l,p1),p2);
-    reemplazar(l,aux->valor,p1);
+    aux = l->arreglo[p1];
+    aux = l->arreglo[p1];
+    l->arreglo[p1] = l->arreglo[p2];
+    l->arreglo[p2] = aux;
 
     return 0;
 }
 
+// Ejercicio 2, c)
 int masPositivosQueNegativos(tipo_lista l){
-    nodo aux = crear();
     int pos = 0, neg = 0;
-
-    aux = l->head;
+    
     for (int i = 0 ; i < l->elementos ; i++){
-        if (aux->valor > 0){
-            pos += 1;
-        }else{
-            if (aux->valor < 0){
-                neg += 1;
-            }
-        }
-        aux = aux->siguiente;
+        if (l->arreglo[i] > 0)
+            pos++;
+        else
+            if (l->arreglo[i] < 0)
+                neg++;
     }
 
     return (pos > neg);
 }
-*/
+
 
