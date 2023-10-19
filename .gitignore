@@ -16,3 +16,7 @@
 *.out
 
 ThinKings/
+
+# Visual & Configs
+.vscode/
+*.json
