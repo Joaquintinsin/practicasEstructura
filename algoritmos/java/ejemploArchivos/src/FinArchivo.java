@@ -3,7 +3,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.io.IOException;
 
-//TODO: importar toda clase que crea necesaria
+import java.util.Arrays;
 
 /**
 * La clase {@code FinArchivo} implementa una aplicación simple para imprimir las últimas {@code n} líneas de un archivo.
@@ -11,8 +11,6 @@ import java.io.IOException;
 * @version 1.0
 */
 public class FinArchivo {
-
-
 	private static final String AYUDA = "--ayuda";
 
 	/**
@@ -37,42 +35,42 @@ public class FinArchivo {
 	* @param args los argumentos conteniendo el archivo y un entero definiendo las últimas {@code n} líneas a imprimir.
 	*/
 	public static void main(String[] args) {
-			if (args.length == 0) {
-				System.err.println("Se espera al menos un argumento");
-				mostrarUso();
-				System.exit(1);
+    if (args.length == 0) {
+			System.err.println("Se espera al menos un argumento");
+			mostrarUso();
+			System.exit(1);
+		}
+		if (args.length == 1 && args[0].compareToIgnoreCase(AYUDA) == 0) {
+			mostrarUso();
+			System.exit(0);
+		}
+		if (args.length == 2) {
+			Path rutaAlArchivo = Paths.get(args[0]);
+			if (!rutaAlArchivo.toFile().exists()) {
+				System.err.println("El archivo " + rutaAlArchivo.toString() + " no existe");
+				System.exit(2);
 			}
-			if (args.length == 1 && args[0].compareToIgnoreCase(AYUDA) == 0) {
-				mostrarUso();
-				System.exit(0);
+			if (!rutaAlArchivo.toFile().isFile()) {
+				System.err.println("La ruta " + rutaAlArchivo.toString() + " no representa un archivo");
+				System.exit(2);
 			}
-			if (args.length == 2) {
-				Path rutaAlArchivo = Paths.get(args[0]);
-				if (!rutaAlArchivo.toFile().exists()) {
-					System.err.println("El archivo " + rutaAlArchivo.toString() + " no existe");
-					System.exit(2);
-				}
-				if (!rutaAlArchivo.toFile().isFile()) {
-					System.err.println("La ruta " + rutaAlArchivo.toString() + " no representa un archivo");
-					System.exit(2);
-				}
-				if (!rutaAlArchivo.toFile().canRead()) {
-					System.err.println("No se tienen permisos de lectura para el archivo " + rutaAlArchivo.toString());
-					System.exit(2);
-				}
-				Integer n = null;
-				try {
-					n = Integer.parseInt(args[1]);
-				} catch (NumberFormatException nfe) {
-					System.err.println("Formato incorrecto para el argumento n (" + args[1] + "), se espera un entero");
-					System.exit(2);
-				}
-				mostrarUltimasNLineas(rutaAlArchivo, n);
-			} else {
-				System.err.println("Uso incorrecto, se esperan 2 argumentos, se encontraron (" + args.length + ")");
-				mostrarUso();
-				System.exit(3);
+			if (!rutaAlArchivo.toFile().canRead()) {
+				System.err.println("No se tienen permisos de lectura para el archivo " + rutaAlArchivo.toString());
+				System.exit(2);
 			}
+			Integer n = null;
+			try {
+				n = Integer.parseInt(args[1]);
+			} catch (NumberFormatException nfe) {
+				System.err.println("Formato incorrecto para el argumento n (" + args[1] + "), se espera un entero");
+				System.exit(2);
+			}
+			mostrarUltimasNLineas(rutaAlArchivo, n);
+		} else {
+			System.err.println("Uso incorrecto, se esperan 2 argumentos, se encontraron (" + args.length + ")");
+			mostrarUso();
+			System.exit(3);
+		}
 	}
 	
 	private static void mostrarUltimasNLineas(Path rutaAlArchivo, Integer n) {
@@ -80,7 +78,7 @@ public class FinArchivo {
 		try {
 			for (String linea : Files.readAllLines(rutaAlArchivo)) {
 				System.out.println(linea);
-				/*TODO: completar código necesario para resolver el problema
+        /*TODO: completar código necesario para resolver el problema
 				* posiblemente involucrando alguna estructura de datos.
 				*/
 			}
