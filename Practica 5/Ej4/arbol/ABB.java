@@ -33,16 +33,46 @@ public class ABB<T> implements Diccionario<T> {
      * @param valor de la raiz del nuevo arbol si no es null.
      */
     public ABB(Comparator<? super T> comparador, T valor) {
-        throw new UnsupportedOperationException("TODO: implementar");
+        raiz = new NodoBinario<T>(valor);
+        this.comparador = comparador;
     }
-
 
     /**
      * {@inheritDoc}
      */
     @Override
     public void insertar(T elem) {
-        throw new UnsupportedOperationException("TODO: implementar");
+        NodoBinario<T> newNode = new NodoBinario<T>(elem);
+        
+        int alturaHi = raiz.getIzquierdo().getAltura();
+        int alturaHd = raiz.getDerecho().getAltura();
+        
+        if (alturaHi == 0 && alturaHd == 0) {
+            // Es hoja
+            raiz.setDerecho(newNode);
+        } else {
+            if (alturaHi == 0 && alturaHd != 0) {
+                // Tiene lugar a la izquierda
+                raiz.setIzquierdo(newNode);
+            } else {
+                // Tiene lugar a la derecha
+                raiz.setDerecho(newNode);
+            }
+        }
+        
+        int resCompare = comparador.compare(raiz.getValor(), elem);
+        if (resCompare < 0) {
+            // Raiz menor que el elemento a insertar
+            subArbolDerecho().insertar(elem);
+        } else {
+            if (resCompare > 0) {
+                // Raiz mayor que el elemento a insertar
+                subArbolIzquierdo().insertar(elem);
+            } else {
+                // No inserta repetidos
+                return;
+            }
+        }
     }
 
 
@@ -50,7 +80,18 @@ public class ABB<T> implements Diccionario<T> {
      * {@inheritDoc}
      */
     public boolean pertenece(T elem) {
-        throw new UnsupportedOperationException("TODO: implementar");
+        if (raiz() == null) {
+            return false;
+        }
+        if (comparador.compare(raiz(), elem) == 0) {
+            return true;
+        } else {
+            if (comparador.compare(raiz(), elem) < 0) {
+                return subArbolDerecho().pertenece(elem);
+            } else {
+                return subArbolIzquierdo().pertenece(elem);
+            }
+        }
     }
 
 
@@ -76,7 +117,7 @@ public class ABB<T> implements Diccionario<T> {
      */
     @Override
     public T raiz() {
-        throw new UnsupportedOperationException("TODO: implementar");
+        return raiz.getValor();
     }
 
     /**
@@ -84,7 +125,7 @@ public class ABB<T> implements Diccionario<T> {
      */
     @Override
     public Diccionario<T> subArbolIzquierdo() {
-        throw new UnsupportedOperationException("TODO: implementar");
+        return (Diccionario<T>) raiz.getIzquierdo();
     }
 
     /**
@@ -92,7 +133,7 @@ public class ABB<T> implements Diccionario<T> {
      */
     @Override
     public Diccionario<T> subArbolDerecho() {
-        throw new UnsupportedOperationException("TODO: implementar");
+        return (Diccionario<T>) raiz.getDerecho();
     }
 
     /**
@@ -100,7 +141,7 @@ public class ABB<T> implements Diccionario<T> {
      */
     @Override
     public int elementos() {
-        throw new UnsupportedOperationException("TODO: implementar");
+        return (esVacio()) ? 0 : 1 + this.subArbolIzquierdo().elementos() + this.subArbolDerecho().elementos();
     }
 
     /**
@@ -108,7 +149,7 @@ public class ABB<T> implements Diccionario<T> {
      */
     @Override
     public int altura() {
-        throw new UnsupportedOperationException("TODO: implementar");
+        return raiz.getAltura();
     }
 
     /**
@@ -116,14 +157,14 @@ public class ABB<T> implements Diccionario<T> {
      */
     @Override
     public boolean esVacio() {
-        throw new UnsupportedOperationException("TODO: implementar");
+        return (raiz.getAltura() == 0);
     }
 
     /**
      * {@inheritDoc}
      */
     public T mayorValor(){
-        throw new UnsupportedOperationException("TODO: implementar");
+        return (raiz.getAltura() == 1 || raiz.getAltura() == 0) ? raiz.getDerecho().getValor() : this.subArbolDerecho().menorValor();
     }
 
     /**
@@ -131,7 +172,7 @@ public class ABB<T> implements Diccionario<T> {
      */
     @Override
     public T menorValor() {
-        throw new UnsupportedOperationException("TODO: implementar");
+        return (raiz.getAltura() == 1 || raiz.getAltura() == 0) ? raiz.getIzquierdo().getValor() : this.subArbolIzquierdo().menorValor();
     }
 
     /**
@@ -139,7 +180,11 @@ public class ABB<T> implements Diccionario<T> {
      */
     @Override
     public T sucesor(T elem) {
-        throw new UnsupportedOperationException("TODO: implementar");
+        if (pertenece(elem)) {
+            return subArbolIzquierdo().raiz();
+        } else {
+            throw new IllegalArgumentException("El elemento no pertenece al arbol");
+        }
     }
 
     /**
@@ -147,7 +192,11 @@ public class ABB<T> implements Diccionario<T> {
      */
     @Override
     public T predecesor(T elem) {
-        throw new UnsupportedOperationException("TODO: implementar");
+        if (pertenece(elem)) {
+            return subArbolDerecho().raiz();
+        } else {
+            throw new IllegalArgumentException("El elemento no pertenece al arbol");
+        }
     }
 
     /**
@@ -171,7 +220,18 @@ public class ABB<T> implements Diccionario<T> {
      */
     @Override
     public boolean equals(Object other) {
-        throw new UnsupportedOperationException("TODO: implementar");
+        if (other == null || !(other instanceof ABB)) {
+            return false;
+        }
+        if (other == this) {
+            return true;
+        }
+        ABB otroArbol = (ABB) new Object();
+        if ((raiz.getValor() == otroArbol.raiz()) || (elementos() != otroArbol.elementos())) {
+            return false;
+        } else {
+            return subArbolDerecho().equals(otroArbol) && subArbolIzquierdo().equals(otroArbol);
+        }
     }
 
     /**
