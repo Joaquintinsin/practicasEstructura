@@ -14,20 +14,20 @@ public class NodoBinario<T>  {
         this.valor = valor;
         this.izquierdo = izquierdo;
         this.derecho = derecho;
-        this.altura = 1;
+        this.altura = 2;
     }
 
     public NodoBinario(){
-        this.valor = (T) new Object();
-        this.izquierdo = (NodoBinario<T>) new Object();
-        this.derecho = (NodoBinario<T>) new Object();
+        this.valor = null;
+        this.izquierdo = null;
+        this.derecho = null;
         this.altura = 0;
     }
 
     public NodoBinario(T valor){
         this.valor = valor;
-        this.izquierdo = (NodoBinario<T>) new Object();
-        this.derecho = (NodoBinario<T>) new Object();
+        this.izquierdo = new NodoBinario<T>();
+        this.derecho = new NodoBinario<T>();
         this.altura = 1;
     }
 
@@ -56,6 +56,7 @@ public class NodoBinario<T>  {
     }
 
     public int getAltura() {
+        if (this == null) return 0;
         return altura;
     }
 

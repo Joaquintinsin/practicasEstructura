@@ -1,0 +1,141 @@
+NodoBinario:
+    public class NodoBinario<T>
+        private T valor;
+        private NodoBinario<T> izquierdo;
+        private NodoBinario<T> derecho;
+        private int altura;
+
+        NodoBinario(T valor, NodoBinario<T> izquierdo, NodoBinario<T> derecho)
+        public NodoBinario()
+        public NodoBinario(T valor)
+        T getValor() 
+        void setValor(T nuevoValor)
+        NodoBinario<T> getIzquierdo()
+        void setIzquierdo(NodoBinario<T> nuevoIzquierdo)
+        NodoBinario<T> getDerecho()
+        void setDerecho(NodoBinario<T> nuevoDerecho)
+        public int getAltura()
+        public void setAltura(int altura)
+
+Diccionario:
+    public interface Diccionario<T>
+        enum Orden { INORDER, PREORDER, POSTORDER }
+        void insertar( T elem );
+        boolean pertenece (T elem);
+        void borrar(T elem);
+        void vaciar();
+        T raiz();
+        Diccionario<T> subArbolIzquierdo();
+        Diccionario<T> subArbolDerecho();
+        int elementos();
+        int altura();
+        boolean esVacio();
+        T mayorValor();
+        T menorValor();
+        T sucesor(T elem);
+        T predecesor(T elem);
+        boolean repOK();
+        @Override
+        String toString();
+        @Override
+        boolean equals(Object other);
+        List<T> aLista();
+        List<T> aLista(Orden orden);
+
+AVL:
+    public class Avl<T> implements Diccionario<T>
+        private NodoBinario<T> raiz;
+        private final Comparator<? super T> comparador;
+
+        public Avl(Comparator<? super T> comparador)
+        public Avl(Comparator<? super T> comparador, T valor)
+        @Override
+        public void insertar(T elem )
+        public boolean pertenece(T elem)
+        @Override
+        public void borrar(T elem)
+        @Override
+        public void vaciar()
+        @Override
+        public T raiz()
+        @Override
+        public Avl<T> subArbolIzquierdo()
+        @Override
+        public Avl<T> subArbolDerecho()
+        @Override
+        public int elementos()
+        @Override
+        public int altura()
+        @Override
+        public boolean esVacio()
+        @Override
+        public T mayorValor()
+        @Override
+        public T menorValor()
+        @Override
+        public T sucesor(T elem)
+        @Override
+        public T predecesor(T elem)
+        public int balance()
+        @Override
+        public boolean repOK()
+        @Override
+        public String toString()
+        @Override
+        public boolean equals(Object other)
+        @Override
+        public List<T> aLista()
+        @Override
+        public List<T> aLista(Orden orden)
+
+        private List<T> aListaInOrder(NodoBinario<T> raiz, List<T> elementos)
+        private List<T> aListaPreOrder(NodoBinario<T> raiz, List<T> elementos)
+        private List<T> aListaPostOrder(NodoBinario<T> raiz, List<T> elementos)
+
+ABB:
+    public class ABB<T> implements Diccionario<T>
+        private NodoBinario<T> raiz;
+        private final Comparator<? super T> comparador;
+
+        public ABB(Comparator<? super T> comparador)
+        public ABB(Comparator<? super T> comparador, T valor)
+        @Override
+        public void insertar(T elem)
+        public boolean pertenece(T elem)
+        @Override
+        public void borrar(T elem)
+        @Override
+        public void vaciar()
+        @Override
+        public T raiz()
+        @Override
+        public Diccionario<T> subArbolIzquierdo()
+        @Override
+        public Diccionario<T> subArbolDerecho()
+        @Override
+        public int elementos()
+        @Override
+        public int altura()
+        @Override
+        public boolean esVacio()
+        public T mayorValor()
+        @Override
+        public T menorValor()
+        @Override
+        public T sucesor(T elem)
+        @Override
+        public T predecesor(T elem)
+        @Override
+        public boolean repOK()
+        @Override
+        public String toString()
+        @Override
+        public boolean equals(Object other)
+        @Override
+        public List<T> aLista()
+        @Override
+        public List<T> aLista(Orden orden)
+        
+        private List<T> aListaInOrder(NodoBinario<T> raiz, List<T> elementos)
+        private List<T> aListaPreOrder(NodoBinario<T> raiz, List<T> elementos)
+        private List<T> aListaPostOrder(NodoBinario<T> raiz, List<T> elementos)
