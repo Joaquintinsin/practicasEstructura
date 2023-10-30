@@ -56,10 +56,14 @@ public class NodoBinario<T>  {
     }
 
     public int getAltura() {
-        if (this == null) return 0;
-        return altura;
+        if (valor == null) 
+            return 0;
+        return 1 + maxAltura(izquierdo.getAltura(), derecho.getAltura());
     }
 
+    private int maxAltura (int alturaIzq, int alturaDer) {
+        return (alturaIzq >= alturaDer) ? alturaIzq : alturaDer;
+    }
     public void setAltura(int altura) {
         this.altura = altura;
     }
