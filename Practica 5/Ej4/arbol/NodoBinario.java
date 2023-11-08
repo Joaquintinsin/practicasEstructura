@@ -26,8 +26,8 @@ public class NodoBinario<T>  {
 
     public NodoBinario(T valor){
         this.valor = valor;
-        this.izquierdo = new NodoBinario<T>();
-        this.derecho = new NodoBinario<T>();
+        this.izquierdo = null;
+        this.derecho = null;
         this.altura = 1;
     }
 
@@ -56,14 +56,17 @@ public class NodoBinario<T>  {
     }
 
     public int getAltura() {
+        int alturaIzq = (izquierdo == null) ? 0 : izquierdo.getAltura();
+        int alturaDer = (derecho == null) ? 0 : derecho.getAltura();
         if (valor == null) 
             return 0;
-        return 1 + maxAltura(izquierdo.getAltura(), derecho.getAltura());
+        return 1 + maxAltura(alturaIzq, alturaDer);
     }
 
     private int maxAltura (int alturaIzq, int alturaDer) {
         return (alturaIzq >= alturaDer) ? alturaIzq : alturaDer;
     }
+
     public void setAltura(int altura) {
         this.altura = altura;
     }
