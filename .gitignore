@@ -14,7 +14,7 @@
 # Executables
 *.exe
 *.out
-*.class
+*.class 
 
 ThinKings/
 
