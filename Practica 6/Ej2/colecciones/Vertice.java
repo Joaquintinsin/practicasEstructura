@@ -1,4 +1,4 @@
-package Ej2.colecciones;
+package tpgrafos.colecciones;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -39,7 +39,7 @@ public class Vertice {
    */
   public Vertice(Integer id) {
     this.id = id;
-    adyacentes = null;
+    adyacentes = new ArrayList<Vertice>();
   }
 
   /**
@@ -78,12 +78,6 @@ public class Vertice {
   @Override
   public int hashCode() {
     int resultadoHashCode = id.hashCode();
-    if (adyacentes == null) {
-      return resultadoHashCode;
-    }
-    for (int i = 0; i < adyacentes.size(); i++) {
-      resultadoHashCode += adyacentes.get(i).getId().hashCode();
-    }
     return resultadoHashCode;
   }
 
@@ -99,33 +93,15 @@ public class Vertice {
     if (obj == null || !(obj instanceof Vertice)) {
       return false;
     }
-
     Vertice verticeAComparar = (Vertice) obj;
-    // Los ids no son iguales devuelve false
-    if (!verticeAComparar.getId().equals(id)) {
-      return false;
-    } else {
-      // Reviso por los adyacentes, comparo las dos listas de adyacentes
-      List<Vertice> adyacentesComp = verticeAComparar.getAdyacentes();
-      // Si no hay elementos adyacentes, depende de si la otra lista es vacía o no
-      if (adyacentes == null) {
-        return adyacentesComp == null;
-      } else {
-        // Si tengo adyacentes en this, pero la otra lista es null, devuelve false.
-        if (adyacentesComp == null) {
-          return false;
-        }
-      }
-      // Si hay elementos adyacentes, compara id por id de las listas
-      for (Vertice verticeComp : adyacentesComp) {  // Para todo vertice de adyacentes a comparar
-        for (Vertice esteVertice : adyacentes) {    // Para todo vertice de adyacentes (este)
-          if (!(verticeComp.getId().equals(esteVertice.getId()))) {   // Si algún id difiere, devuelve falso
-            return false;
-          }
-        }
-      }
+    if (this == verticeAComparar) {
       return true;
     }
+    if (verticeAComparar.getId() == null) {
+      return false;
+    }
+    // ¿Los ids son iguales?
+    return this.id.equals(verticeAComparar.getId());
   }
 
   /**
@@ -136,12 +112,9 @@ public class Vertice {
   @Override
   public String toString() {
     String c = "{" + String.valueOf(id) + "}";
-    if (adyacentes == null) {
-      return c;
-    }
     for (Vertice verticeLista : adyacentes) {
-      c += "->";
-      c += "{" + String.valueOf(verticeLista.getId()) + "}";
+      c += " -> ";
+      c += String.valueOf(verticeLista.getId());
     }
     return c;
   }

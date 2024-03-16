@@ -1,4 +1,4 @@
-package Ej2.colecciones;
+package tpgrafos.colecciones;
 
 public class Arista {
   /**
@@ -65,12 +65,15 @@ public class Arista {
       return true;
     }
     // Sino, veo que las aristas vayan en el mismo sentido de vertice a vertice.
-    Boolean resArist1 = this.getPrimero().equals(otraArista.getPrimero());
-    Boolean resArist2 = this.getSegundo().equals(otraArista.getSegundo());
-    Boolean resEquals = (resArist1 && resArist2);
+    boolean resArist1 = this.getPrimero().equals(otraArista.getPrimero());
+    boolean resArist2 = this.getSegundo().equals(otraArista.getSegundo());
+    boolean resEquals1 = (resArist1 && resArist2);
 
-    return resEquals; // es la misma arista tanto si va o vuelve.
+    boolean resArist11 = this.getPrimero().equals(otraArista.getSegundo());
+    boolean resArist22 = this.getSegundo().equals(otraArista.getPrimero());
+    boolean resEquals2 = (resArist11 && resArist22);
 
+    return resEquals1 || resEquals2; // es la misma arista tanto si va o vuelve.
   }
 
   /**
@@ -79,10 +82,10 @@ public class Arista {
    */
   @Override
   public String toString() {
-    String msg = " se relaciona con ";
-    String vert1 = primero.getId().toString();
-    String vert2 = segundo.getId().toString();
+    String relacion = "->";
+    String vert1 = "{" + primero.getId().toString() + "}";
+    String vert2 = "{" + segundo.getId().toString() + "}";
     //retorna la relacion
-    return vert1 + msg + vert2;
+    return vert1 + relacion + vert2;
   }
 }

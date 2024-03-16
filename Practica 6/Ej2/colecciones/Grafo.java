@@ -1,4 +1,4 @@
-package Ej2.colecciones;
+package tpgrafos.colecciones;
 
 import java.util.List;
 import java.util.Collection;
