@@ -2,7 +2,8 @@
 #include <stdlib.h>
 #include "pilas.h"
 
-int main( int argc, char **argv ) {
+int main(int argc, char **argv)
+{
 	tipo_pila pilaDeEnteros = Crear(2);
 	tipo_pila pilaDeCaracteres = Crear(1);
 
@@ -20,4 +21,3 @@ int main( int argc, char **argv ) {
 
 	return 0;
 }
-
