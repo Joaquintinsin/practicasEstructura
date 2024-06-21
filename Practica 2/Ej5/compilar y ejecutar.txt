@@ -1,10 +1,15 @@
 compilar:
-	pararse en */Ej5
+	pararse en .../Ej5
+	javac cola/*.java
+		o tambien
+	javac cola/b/Palindromo.java  cola/MainColas.java
+		que es lo mismo:
 	javac cola/b/Palindromo.java
 	javac cola/MainColas.java
 
 ejecutar:
-	pararse en */Ej5/cola/b
+	pararse en .../Ej5/cola/b
 	java Palindromo
-    o pararse en */Ej5
+    
+	o pararse en .../Ej5
 	java cola.MainColas

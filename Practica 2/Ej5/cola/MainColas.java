@@ -1,8 +1,5 @@
 package cola;
 
-import cola.ColaArregloFijo;
-import cola.Cola;
-
 public class MainColas {
     public static void main (String[] args) {
         System.out.println("Inicio main");
