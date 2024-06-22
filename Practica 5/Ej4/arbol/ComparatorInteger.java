@@ -8,4 +8,3 @@ public class ComparatorInteger implements Comparator<Integer> {
         return x.compareTo(y);
     }
 }
-

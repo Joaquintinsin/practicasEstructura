@@ -6,36 +6,64 @@ import java.io.IOException;
 import java.util.Arrays;
 
 /**
-* La clase {@code FinArchivo} implementa una aplicación simple para imprimir las últimas {@code n} líneas de un archivo.
-* Esta clase usa parámetros que representan respectivamente el archivo y la cantidad de líneas a imprimir.
-* @version 1.0
-*/
+ * La clase {@code FinArchivo} implementa una aplicación simple para imprimir
+ * las últimas {@code n} líneas de un archivo.
+ * Esta clase usa parámetros que representan respectivamente el archivo y la
+ * cantidad de líneas a imprimir.
+ * 
+ * @version 1.0
+ */
 public class FinArchivo {
 	private static final String AYUDA = "--ayuda";
 
 	/**
-	* Dados un archivo existente y un entero positivo {@code n} &ge; {@code 0}, imprime por salida estándar las últimas {@code n} líneas.
-	* Ejemplos de uso
-	* Dado un archivo {@code lineas.txt} con el siguiente contenido
-	* <pre>
+	 * Dados un archivo existente y un entero positivo {@code n} &ge; {@code 0},
+	 * imprime por salida estándar las últimas {@code n} líneas.
+	 * Ejemplos de uso
+	 * Dado un archivo {@code lineas.txt} con el siguiente contenido
+	 * 
+	 * <pre>
 	*	linea1
 	*	linea2
 	*	linea3
-	* </pre>
-	* <ul>
-	* 	<li>Al ejecutar <pre>java FinArchivo lineas.txt 4</pre>, se debe imprimir el archivo completo.</li>
-	* 	<li>Al ejecutar <pre>java FinArchivo lineas.txt 2</pre>, se debe imprimir
-	*		<pre>
+	 * </pre>
+	 * <ul>
+	 * <li>Al ejecutar
+	 * 
+	 * <pre>
+	 * java FinArchivo lineas.txt 4
+	 * </pre>
+	 * 
+	 * , se debe imprimir el archivo completo.</li>
+	 * <li>Al ejecutar
+	 * 
+	 * <pre>
+	 * java FinArchivo lineas.txt 2
+	 * </pre>
+	 * 
+	 * , se debe imprimir
+	 * 
+	 * <pre>
 	*			linea2
 	*			linea3
-	*		</pre>.
-	*	</li>
-	* 	<li>Al ejecutar <pre>java FinArchivo lineas.txt 0</pre>, no se debe imprimir nada</li>
-	* </ul>
-	* @param args los argumentos conteniendo el archivo y un entero definiendo las últimas {@code n} líneas a imprimir.
-	*/
+	 * </pre>
+	 * 
+	 * .
+	 * </li>
+	 * <li>Al ejecutar
+	 * 
+	 * <pre>
+	 * java FinArchivo lineas.txt 0
+	 * </pre>
+	 * 
+	 * , no se debe imprimir nada</li>
+	 * </ul>
+	 * 
+	 * @param args los argumentos conteniendo el archivo y un entero definiendo las
+	 *             últimas {@code n} líneas a imprimir.
+	 */
 	public static void main(String[] args) {
-    if (args.length == 0) {
+		if (args.length == 0) {
 			System.err.println("Se espera al menos un argumento");
 			mostrarUso();
 			System.exit(1);
@@ -72,31 +100,31 @@ public class FinArchivo {
 			System.exit(3);
 		}
 	}
-	
+
 	private static void mostrarUltimasNLineas(Path rutaAlArchivo, Integer n) {
-		//TODO: agregar cualquier estructura que crea necesaria
+		// TODO: agregar cualquier estructura que crea necesaria
 		try {
 			for (String linea : Files.readAllLines(rutaAlArchivo)) {
 				System.out.println(linea);
-        /*TODO: completar código necesario para resolver el problema
-				* posiblemente involucrando alguna estructura de datos.
-				*/
+				/*
+				 * TODO: completar código necesario para resolver el problema
+				 * posiblemente involucrando alguna estructura de datos.
+				 */
 			}
 		} catch (IOException ioe) {
 			System.err.println("Ocurrió un problema durante la lectura del archivo");
 			ioe.printStackTrace(System.err);
 			System.exit(2);
 		}
-		//TODO: imprimir las últimas n líneas
+		// TODO: imprimir las últimas n líneas
 	}
-	
+
 	private static void mostrarUso() {
-		String uso = 	"FinArchivo\n" +
+		String uso = "FinArchivo\n" +
 				"Muestra las últimas n líneas de un archivo.\n" +
 				"Uso:\n" +
 				"java FinArchivo --ayuda					:	muestra este mensaje.\n" +
-				"java FinArchivo <ruta a un archivo> <entero mayor a 0>	:	imprime las últimas n de un archivo.\n"
-		;
+				"java FinArchivo <ruta a un archivo> <entero mayor a 0>	:	imprime las últimas n de un archivo.\n";
 		System.out.println(uso);
 	}
 

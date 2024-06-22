@@ -1,6 +1,6 @@
 package heap;
 
-public class minHeap<T extends Comparable> {
+public class minHeap<T extends Comparable<T>> {
     private T raiz;
     private T izq;
     private T der;
