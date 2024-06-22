@@ -2,152 +2,249 @@ package colecciones.listaNodos;
 
 public class ListaNodos<T> implements Lista<T> {
     public static final int CAP_MAX_NODOS = 20;
-    private static int cantElem;
+    private int cantElem;
     private T info;
-    private T* next;
-    
-    public ListaNodos(){
-        info = (T) new Object;
-        *next = null;
-        cantElem = 0;
+    private ListaNodos<T> next;
+
+    public ListaNodos() {
+        this.cantElem = 0;
+        this.info = null;
+        this.next = null;
     }
-    
-    public boolean agregar(T elem){
-        // no quiero que venga null ni que venga este mismo objeto
+
+    /** {@inheritDoc} */
+    public boolean agregar(T elem) {
         if (elem == null || elem == this || cantElem >= CAP_MAX_NODOS)
             return false;
-        ListaNodos nuevoNodo = new ListaNodos();
-        nuevoNodo.info = elem;
-        nuevoNodo.next = this;
-        this = nuevoNodo;
-        cantElem++;
-        return true;
-    }
-    
-    public boolean agregarTodos(Lista<T> otraLista){
-        if ( cantElem >= CAP_MAX_NODOS || otraLista == null )
-            return false;
-        
-        int i = 1;
-        ListaNodos aux = new ListaNodos();
-        while ( i < cantElem ){
-            aux = next;
-            i++;
-        }
-        
-        for ( i = 1 ; cantElem < otraLista.elementos() && i < CAP_MAX_NODOS ; i++ ){
-            aux.next = 
-        }
-        
-        for ( int i = 0 ; cantElem < otraLista.elementos() && i < CAP_MAX_NODOS ; i++){
-            arr[cantElem] = otraLista.obtener(i);
-            cantElem++;
-        }
-        
-        return (cantElem + otraLista.elementos()) <= arr.length;
-    }
-    
-    public boolean insertar(T elem, int indice){
-        if ( indice < 0 || indice > cantElem ) throw new IndexOutOfBoundsException("Indice fuera de rango");
-        
-        if ( arr.length == cantElem )
-            return false;
-        
-        if ( indice == cantElem ){
-            arr[indice] = elem;
-            cantElem++;
-        }else{
-            T aux = arr[indice];
-            arr[indice] = elem;
-            for ( int i = indice ; i < arr.length ; i++ ){
-                arr[i] = aux;
-                aux = arr[i+1];
+        if (esVacia()) {
+            this.info = elem;
+        } else {
+            ListaNodos<T> actual = this;
+            while (actual.getNext() != null) {
+                actual = actual.getNext();
             }
-            cantElem++;
+            ListaNodos<T> nuevoNodo = new ListaNodos<>();
+            nuevoNodo.setInfo(elem);
+            actual.setNext(nuevoNodo);
         }
+
+        this.cantElem++;
         return true;
     }
-    
-    public T eliminar(int indice){
-        if ( indice < 0 || indice > cantElem ) throw new IndexOutOfBoundsException("Indice fuera de rango");
-        
-        T rescueElem = arr[indice-1];
-        arr[indice-1] = null;
-        
-        for (int i = cantElem ; i < indice ; i--)
-            arr[i-1] = arr[i];
-        return rescueElem;
+
+    private void setInfo(T elem) {
+        this.info = elem;
     }
-    
-    public T obtener(int indice){
-        return arr[indice];
+
+    public T getInfo() {
+        return info;
     }
-    
-    public Lista<T> subLista(int desdeInd, int hastaInd){
-        if ( desdeInd < 0 || hastaInd < cantElem || desdeInd > hastaInd) throw new IndexOutOfBoundsException("Indice fuera de rango");
-        
-        Lista<T> listaResultado = new ImplementacionListasArreglo();
-        if ( desdeInd == hastaInd || esVacia() )
-            return listaResultado;
-        
+
+    private void setNext(ListaNodos<T> nodo) {
+        this.next = nodo;
+    }
+
+    public ListaNodos<T> getNext() {
+        return next;
+    }
+
+    /** {@inheritDoc} */
+    public boolean agregarTodos(Lista<T> otraLista) {
+        if (otraLista == null || otraLista == this)
+            return false;
+        if (cantElem + otraLista.elementos() >= CAP_MAX_NODOS)
+            return false;
+        for (int i = 0; i < otraLista.elementos(); i++) {
+            this.agregar(otraLista.obtener(i));
+        }
+
+        return true;
+    }
+
+    /** {@inheritDoc} */
+    public boolean insertar(T elem, int indice) {
+        if (indice < 0 || indice > cantElem || cantElem == CAP_MAX_NODOS)
+            return false;
+
+        ListaNodos<T> nuevoNodo = new ListaNodos<>();
+        if (esVacia() && indice == 0) {
+            this.info = elem;
+        } else if (indice == 0) {
+            // Salvo this element
+            // Piso this info con el elemento
+            // Lleno el nuevo nodo con el info que guarde
+            // Y apunta a donde apuntaba el primero
+            // Ahora apunta al nuevonodo desde el primero
+            T auxInfo = this.info;
+            this.info = elem;
+            nuevoNodo.setInfo(auxInfo);
+            nuevoNodo.setNext(this.next);
+            this.next = nuevoNodo;
+        } else {
+            ListaNodos<T> actual = this;
+            int i = 0;
+            while (i < indice - 1) {
+                actual = actual.getNext();
+                i++;
+            }
+            nuevoNodo.setNext(actual.getNext());
+            actual.setNext(nuevoNodo);
+        }
+
+        this.cantElem++;
+        return true;
+    }
+
+    /** {@inheritDoc} */
+    public T eliminar(int indice) {
+        if (esVacia() || indice < 0 || indice >= cantElem)
+            throw new IllegalArgumentException("Eliminar: Indice invalido o lista vacia");
+
+        T elemRescatado;
+        if (indice == 0) {
+            // Si se desea eliminar el primer elemento, rescato desde this.info
+            elemRescatado = this.info;
+            // Pregunto si hay nodos mas adelante o no.
+            // Si los hay entonces tomo justo el siguiente y lo pongo como primero
+            // Si no hay entonces directamente elimino poniendo en null
+            if (this.next != null) {
+                this.info = this.next.getInfo();
+                this.next = this.next.getNext();
+            } else {
+                this.info = null;
+                this.next = null;
+            }
+        } else {
+            // Recorro secuencialmente hasta el indice - 1
+            ListaNodos<T> actual = this;
+            for (int i = 0; i < indice - 1; i++) {
+                actual = actual.getNext();
+            }
+            // Estoy parado justo antes del que quiero eliminar, por lo que nodoAEliminar lo
+            // pongo en el que sigue
+            // Rescato el info en elemRescatado
+            // Hago el puentecito esquivando nodoAEliminar y luego le seteo null para
+            // eliminarlo
+            ListaNodos<T> nodoAEliminar = actual.getNext();
+            elemRescatado = nodoAEliminar.getInfo();
+            actual.setNext(nodoAEliminar.getNext());
+            nodoAEliminar.setNext(null);
+            nodoAEliminar.setInfo(null);
+        }
+        cantElem--;
+        return elemRescatado;
+    }
+
+    /** {@inheritDoc} */
+    public T obtener(int indice) {
+        if (indice < 0 || indice >= cantElem)
+            throw new IndexOutOfBoundsException("Obtener: Indice invalido");
+
+        ListaNodos<T> actual = this;
         int i = 0;
-        while ( desdeInd < hastaInd ){
-            listaResultado.insertar(arr[desdeInd], i);
-            desdeInd++;
+        while (i < indice) {
+            actual = actual.getNext();
             i++;
         }
-        
-        return listaResultado;
+        return actual.getInfo();
     }
-    
-    public boolean contiene(T elem){
-        for ( int i = 0 ; i < cantElem ; i++ ){
-            if ( arr[i] == elem )
-                return true;
+
+    /** {@inheritDoc} */
+    public Lista<T> subLista(int desdeInd, int hastaInd) {
+        if (desdeInd < 0 || hastaInd > cantElem || desdeInd > hastaInd)
+            throw new IndexOutOfBoundsException("subLista: Indices invalidos");
+
+        ListaNodos<T> listaResultante = new ListaNodos<>();
+        ListaNodos<T> actual = this;
+        for (int i = 0; i < desdeInd; i++) {
+            actual = actual.getNext();
+        }
+        for (int i = desdeInd; i < hastaInd; i++) {
+            listaResultante.agregar(actual.getInfo());
+            actual = actual.getNext();
+        }
+        return listaResultante;
+    }
+
+    /** {@inheritDoc} */
+    public boolean contiene(T elem) {
+        ListaNodos<T> actual = this;
+        for (int i = 0; i < cantElem; i++) {
+            if (actual.getInfo() == null) {
+                if (elem == null)
+                    return true;
+            } else {
+                if (actual.getInfo().equals(elem))
+                    return true;
+            }
+            actual = actual.getNext();
         }
         return false;
     }
-    
-    public void vaciar(){
+
+    /** {@inheritDoc} */
+    public void vaciar() {
         cantElem = 0;
     }
-    
-    public int elementos(){
+
+    /** {@inheritDoc} */
+    public int elementos() {
         return cantElem;
     }
-    
-    public boolean esVacia(){
-        return ( cantElem == 0 );
+
+    /** {@inheritDoc} */
+    public boolean esVacia() {
+        return (cantElem == 0);
     }
-    
-    public boolean repOK(){
-        throw new UnsupportedOperationException("Debe implementar este método");
+
+    /** {@inheritDoc} */
+    public boolean repOK() {
+        return (next != this && cantElem <= CAP_MAX_NODOS);
     }
-    
+
+    /** {@inheritDoc} */
     @Override
-	public String toString(){
-        String msg = "Elementos de la lista implementada con arreglos: \n";
-        msg += "Hay " + cantElem + " elementos almacenados en la lista. \n";
-        for ( int i = 0 ; i < cantElem ; i++ ){
-            msg += "Elemento número " + (i+1);
-            msg += arr[i].toString();
+    public String toString() {
+        if (esVacia())
+            return "La lista esta vacia";
+        String msg = "Mostrando la lista de nodos\n";
+        msg += "Hay un total de " + cantElem + " elementos en la lista\n";
+        for (int i = 0; i < cantElem; i++) {
+            msg += "Elemento nro " + (i + 1) + ": ";
+            msg += String.valueOf(this.info.toString()) + "\n";
         }
         return msg;
     }
-    
+
+    /** {@inheritDoc} */
+    @SuppressWarnings("unchecked")
     @Override
-	public boolean equals(Object otro){
-        if ( otro == null || !(otro instanceof ImplementacionListasArreglo) )
+    public boolean equals(Object otro) {
+        if (otro == this)
+            return true;
+        if (otro == null || getClass() != otro.getClass())
             return false;
-        
-        ImplementacionListasArreglo otraLista = (ImplementacionListasArreglo) otro;
-        if ( otraLista.elementos() != cantElem )
+
+        ListaNodos<T> otraLista = (ListaNodos<T>) otro;
+        if (cantElem != otraLista.elementos())
             return false;
-        
-        boolean logicAux = true;
-        for ( int i = 0 ; i < otraLista.elementos() ; i++ )
-            logicAux = logicAux && (arr[i] == otraLista.obtener(i));
-        
-        return logicAux;
+
+        ListaNodos<T> estaLista = this;
+        ListaNodos<T> listaEntrante = otraLista;
+
+        while (estaLista != null && listaEntrante != null) {
+            T thisElem = estaLista.getInfo();
+            T otroElem = listaEntrante.getInfo();
+            if (thisElem == null) {
+                if (otroElem != null)
+                    return false;
+            } else {
+                if (!thisElem.equals(otroElem))
+                    return false;
+            }
+            estaLista = estaLista.getNext();
+            listaEntrante = listaEntrante.getNext();
+        }
+        return true;
     }
 }
