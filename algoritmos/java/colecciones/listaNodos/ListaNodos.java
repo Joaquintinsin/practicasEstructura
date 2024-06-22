@@ -16,6 +16,10 @@ public class ListaNodos<T> implements Lista<T> {
     public boolean agregar(T elem) {
         if (elem == null || elem == this || cantElem >= CAP_MAX_NODOS)
             return false;
+
+        ListaNodos<T> nuevoNodo = new ListaNodos<>();
+        nuevoNodo.setInfo(elem);
+
         if (esVacia()) {
             this.info = elem;
         } else {
@@ -23,8 +27,6 @@ public class ListaNodos<T> implements Lista<T> {
             while (actual.getNext() != null) {
                 actual = actual.getNext();
             }
-            ListaNodos<T> nuevoNodo = new ListaNodos<>();
-            nuevoNodo.setInfo(elem);
             actual.setNext(nuevoNodo);
         }
 
@@ -67,30 +69,18 @@ public class ListaNodos<T> implements Lista<T> {
             return false;
 
         ListaNodos<T> nuevoNodo = new ListaNodos<>();
-        if (esVacia() && indice == 0) {
+        nuevoNodo.setInfo(elem);
+        if (indice == 0) {
+            nuevoNodo.setNext(this);
             this.info = elem;
-        } else if (indice == 0) {
-            // Salvo this element
-            // Piso this info con el elemento
-            // Lleno el nuevo nodo con el info que guarde
-            // Y apunta a donde apuntaba el primero
-            // Ahora apunta al nuevonodo desde el primero
-            T auxInfo = this.info;
-            this.info = elem;
-            nuevoNodo.setInfo(auxInfo);
-            nuevoNodo.setNext(this.next);
-            this.next = nuevoNodo;
         } else {
             ListaNodos<T> actual = this;
-            int i = 0;
-            while (i < indice - 1) {
+            for (int i = 0; i < indice - 1; i++) {
                 actual = actual.getNext();
-                i++;
             }
             nuevoNodo.setNext(actual.getNext());
             actual.setNext(nuevoNodo);
         }
-
         this.cantElem++;
         return true;
     }
@@ -207,11 +197,15 @@ public class ListaNodos<T> implements Lista<T> {
     public String toString() {
         if (esVacia())
             return "La lista esta vacia";
+        ListaNodos<T> actual = this;
         String msg = "Mostrando la lista de nodos\n";
         msg += "Hay un total de " + cantElem + " elementos en la lista\n";
-        for (int i = 0; i < cantElem; i++) {
-            msg += "Elemento nro " + (i + 1) + ": ";
-            msg += String.valueOf(this.info.toString()) + "\n";
+        int i = 1;
+        while (actual != null) {
+            msg += "Elemento nro " + i + ": ";
+            msg += String.valueOf(actual.getInfo().toString()) + "\n";
+            actual = actual.getNext();
+            i++;
         }
         return msg;
     }
